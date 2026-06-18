@@ -1,0 +1,26 @@
+name: Import DeepEye
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/import-deepeye.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Import DeepEye master into Deepeval main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git clone --mirror https://github.com/thuxiaoxuesheng/DeepEye.git source.git
+          cd source.git
+          git push "https://x-access-token:${GH_TOKEN}@github.com/thuxiaoxuesheng/Deepeval.git" refs/heads/master:refs/heads/main --force
+          git push "https://x-access-token:${GH_TOKEN}@github.com/thuxiaoxuesheng/Deepeval.git" --tags --force
