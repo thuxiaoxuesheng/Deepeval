@@ -24,3 +24,5 @@ jobs:
           cd source.git
           git push "https://x-access-token:${GH_TOKEN}@github.com/thuxiaoxuesheng/Deepeval.git" refs/heads/master:refs/heads/main --force
           git push "https://x-access-token:${GH_TOKEN}@github.com/thuxiaoxuesheng/Deepeval.git" --tags --force
+
+# Triggered by ChatGPT to import DeepEye into Deepeval.
