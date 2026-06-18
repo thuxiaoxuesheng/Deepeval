@@ -1,0 +1,407 @@
+/* Tool steps in assistant timeline */
+
+.tool-tree-item {
+  position: relative;
+  padding-left: 14px;
+  min-width: 0;
+  --step-radius: var(--chat-surface-radius, 12px);
+  --step-border: var(--chat-surface-border, 1px solid var(--border-color));
+  --step-shadow-soft: var(--chat-surface-shadow-soft, 0 4px 14px rgba(0, 0, 0, 0.06));
+  --step-shadow-hover: var(--chat-surface-shadow-hover, 0 10px 24px rgba(0, 0, 0, 0.1));
+}
+
+.tool-tree-item.is-nested {
+  padding-left: 10px;
+}
+
+.tool-tree-item::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--border-color) 82%, transparent);
+}
+
+.tool-header {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border: var(--step-border);
+  border-radius: var(--step-radius);
+  background: color-mix(in srgb, var(--card-bg) 85%, var(--main-bg-alt));
+  color: var(--main-text);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--step-shadow-soft);
+  min-width: 0;
+}
+
+.tool-header:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--step-shadow-hover);
+}
+
+.tool-header.static {
+  cursor: default;
+}
+
+.tool-header.static:hover {
+  transform: none;
+  box-shadow: var(--step-shadow-soft);
+}
+
+.tool-node {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  border: 2px solid var(--border-color);
+  background: var(--main-bg);
+  position: relative;
+}
+
+.tool-node.running {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--main-bg));
+}
+
+.tool-node.running::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  animation: tool-pulse 1.5s ease-out infinite;
+}
+
+.tool-node.done {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 30%, var(--main-bg));
+}
+
+.tool-node.done::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0;
+  width: 4px;
+  height: 7px;
+  border: solid color-mix(in srgb, var(--success) 78%, #000000);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+.tool-node.error {
+  border-color: var(--error);
+  background: color-mix(in srgb, var(--error) 24%, var(--main-bg));
+}
+
+.tool-node.error::after {
+  content: '!';
+  position: absolute;
+  left: 2px;
+  top: -2px;
+  font-size: 10px;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--error) 82%, #000000);
+}
+
+.tool-main {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 4px;
+}
+
+.tool-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.tool-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.tool-name {
+  font-size: var(--ui-font-md);
+  font-weight: 600;
+  line-height: 1.3;
+  min-width: 0;
+  flex: 1 1 180px;
+  overflow-wrap: anywhere;
+}
+
+.tool-source {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border-color) 88%, transparent);
+  background: color-mix(in srgb, var(--main-bg-alt) 80%, transparent);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--main-text-muted);
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.tool-status {
+  flex-shrink: 0;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 999px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tool-status.running {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.tool-status.done {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+  border-color: color-mix(in srgb, var(--success) 36%, transparent);
+}
+
+.tool-status.error {
+  color: var(--error);
+  background: color-mix(in srgb, var(--error) 12%, transparent);
+  border-color: color-mix(in srgb, var(--error) 35%, transparent);
+}
+
+.tool-chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--main-text-muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tool-chevron.expanded {
+  transform: rotate(180deg);
+}
+
+.tool-details {
+  margin: 8px 0 12px 22px;
+  padding-left: 12px;
+  border-left: 1px dashed color-mix(in srgb, var(--border-color) 86%, transparent);
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tool-block {
+  display: grid;
+  gap: 4px;
+}
+
+.tool-label {
+  font-size: var(--ui-font-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--main-text-muted);
+  font-weight: 600;
+}
+
+.tool-pre {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--step-radius);
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: var(--ui-font-sm);
+  line-height: 1.5;
+  color: var(--main-text);
+  white-space: pre-wrap;
+  overflow: auto;
+  max-height: 220px;
+}
+
+.tool-children {
+  border-left: 1px dashed color-mix(in srgb, var(--border-color) 86%, transparent);
+  padding-left: 10px;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tool-thought {
+  margin-left: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--border-color) 82%, transparent);
+  border-radius: var(--step-radius);
+  background: color-mix(in srgb, var(--main-bg-alt) 72%, transparent);
+}
+
+.tool-thought.running {
+  border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+.tool-thought-mark {
+  width: 16px;
+  min-height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--main-text-muted);
+  flex-shrink: 0;
+}
+
+.tool-thought-mark .thinking-dots {
+  gap: 3px;
+  padding: 0;
+}
+
+.tool-thought-mark .thinking-dots span {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  opacity: 0.85;
+}
+
+.tool-thought-dot {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.tool-thought-body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tool-thought-label {
+  font-size: var(--ui-font-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--main-text-muted);
+  font-weight: 600;
+}
+
+.tool-thought-text {
+  font-size: var(--ui-font-sm);
+  line-height: 1.55;
+  color: var(--main-text);
+}
+
+@keyframes tool-pulse {
+  0% {
+    transform: scale(0.86);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .tool-tree-item {
+    padding-left: 10px;
+  }
+
+  .tool-header {
+    gap: 8px;
+    padding: 7px 8px;
+  }
+
+  .tool-title-row {
+    gap: 6px;
+  }
+
+  .tool-name {
+    flex-basis: 100%;
+    font-size: 13px;
+  }
+
+  .tool-source {
+    font-size: 9px;
+    padding: 0 7px;
+  }
+
+  .tool-status {
+    padding: 3px 7px;
+  }
+
+  .tool-details {
+    margin-left: 16px;
+    padding-left: 8px;
+  }
+
+  .tool-children {
+    padding-left: 8px;
+  }
+}
+
+.chat-container.compact .tool-tree-item {
+  padding-left: 10px;
+}
+
+.chat-container.compact .tool-tree-item::before {
+  left: 3px;
+}
+
+.chat-container.compact .tool-header {
+  gap: 8px;
+  padding: 8px 9px;
+  border-radius: 14px;
+}
+
+.chat-container.compact .tool-main {
+  gap: 3px;
+}
+
+.chat-container.compact .tool-name {
+  font-size: 13px;
+  flex-basis: 100%;
+}
+
+.chat-container.compact .tool-status {
+  font-size: 10px;
+  padding: 3px 7px;
+}
+
+.chat-container.compact .tool-source {
+  font-size: 9px;
+  padding: 0 7px;
+}
+
+.chat-container.compact .tool-details {
+  margin: 7px 0 10px 16px;
+  padding-left: 8px;
+}
+
+.chat-container.compact .tool-children {
+  padding-left: 8px;
+}
+
+.chat-container.compact .tool-pre {
+  padding: 9px 10px;
+  font-size: 11px;
+  max-height: 180px;
+}

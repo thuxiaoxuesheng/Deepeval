@@ -1,0 +1,257 @@
+/* File Explorer - Unified Styles */
+
+/* File Explorer Container */
+.file-explorer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-bg);
+  user-select: none;
+  --explorer-font-xs: var(--ui-font-xs);
+  --explorer-font-sm: var(--ui-font-sm);
+  --explorer-font-md: var(--ui-font-md);
+}
+
+.file-explorer .text-xs {
+  font-size: var(--explorer-font-xs);
+}
+
+.file-explorer .text-sm {
+  font-size: var(--explorer-font-sm);
+}
+
+/* Header */
+.file-explorer-header {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 11px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-bg) 99%, #ffffff) 0%, color-mix(in srgb, var(--panel-bg) 95%, var(--main-bg-alt)) 100%);
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-border) 86%, transparent);
+}
+
+.file-explorer-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--explorer-font-xs);
+  color: var(--main-text);
+  font-weight: 600;
+}
+
+.file-explorer-breadcrumb-separator {
+  color: var(--main-text-muted);
+}
+
+.file-explorer-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.file-explorer-btn {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card-bg) 94%, var(--main-bg-alt));
+  border: 1px solid color-mix(in srgb, var(--border-color) 84%, transparent);
+  color: var(--main-text-muted);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.04);
+}
+
+.file-explorer-btn:hover {
+  background: color-mix(in srgb, var(--accent) 6%, var(--card-bg));
+  border-color: color-mix(in srgb, var(--accent) 14%, var(--border-color));
+  color: var(--main-text);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
+}
+
+.file-explorer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Scrollbar */
+.ide-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ide-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ide-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.ide-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* Delete confirmation dialog */
+.delete-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.26);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: file-dialog-fade-in 180ms ease;
+}
+
+.delete-dialog {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 18px;
+  min-width: 320px;
+  max-width: 420px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+  animation: file-dialog-sheet-in 200ms var(--ease-out-expo);
+}
+
+.delete-title {
+  font-size: var(--explorer-font-md);
+  font-weight: 600;
+  color: var(--main-text);
+  margin-bottom: 12px;
+}
+
+.delete-message {
+  font-size: var(--explorer-font-sm);
+  color: var(--main-text-muted);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.delete-target {
+  color: var(--main-text);
+  font-weight: 600;
+}
+
+.delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.delete-btn {
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: var(--explorer-font-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.delete-btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--main-text);
+}
+
+.delete-btn-cancel:hover {
+  background: var(--sidebar-hover);
+  border-color: var(--border-hover);
+}
+
+.delete-btn-confirm {
+  background: #ff3b30;
+  border: none;
+  color: white;
+}
+
+.delete-btn-confirm:hover {
+  background: #e53e3e;
+}
+
+/* Empty State */
+.file-explorer-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 22px 18px;
+  text-align: center;
+  color: var(--main-text-muted);
+  animation: file-empty-in 220ms ease;
+}
+
+.file-explorer-empty-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--border-color) 88%, transparent);
+  background: color-mix(in srgb, var(--card-bg) 95%, var(--main-bg-alt));
+  color: var(--main-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+}
+
+.file-explorer-empty-icon--error {
+  color: var(--error);
+  border-color: color-mix(in srgb, var(--error) 20%, var(--border-color));
+  background: color-mix(in srgb, var(--error) 6%, var(--card-bg));
+}
+
+.file-explorer-empty-title {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--main-text);
+}
+
+.file-explorer-empty-subtitle {
+  max-width: 240px;
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--main-text-muted);
+}
+
+@keyframes file-empty-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes file-dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes file-dialog-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
